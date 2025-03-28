@@ -13,7 +13,7 @@ class SplashCubit extends Cubit<SplashState> {
   void onInitializeSplash() async => await Future.wait([_handleSplashRoute()]);
 
   Future<void> _handleSplashRoute() async {
-    await Future.delayed(const Duration(seconds: 2), () {
+    await Future.delayed(const Duration(seconds: 3), () {
       NavigationHelper.onPushReplacementNamed(route: AppRoutes.layout);
       emit(SplashCompleted());
     });

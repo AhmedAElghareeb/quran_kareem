@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quran_kareem/core/utils/app_providers.dart';
+import 'package:quran_kareem/src/presentations/views/layout_views/home/home_screen.dart';
 import 'package:quran_kareem/src/presentations/views/layout_views/layout/widgets/bottom_navigation_bar_item.dart';
+import 'package:quran_kareem/src/presentations/views/layout_views/settings/settings_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
@@ -18,7 +22,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
   void _onPageChangedToCurrent(int index) {
     setState(() {
       _currentIndex = index;
-
       _pageController.jumpToPage(index);
     });
   }
@@ -28,109 +31,58 @@ class _LayoutScreenState extends State<LayoutScreen> {
     super.initState();
     _pageController = PageController(initialPage: 0);
     _pages = [
-      Container(
-        key: PageStorageKey('Page1'),
-        color: Colors.red,
+      HomeScreen(
+        key: PageStorageKey('HomeScreen'),
       ),
-      Container(
-        key: PageStorageKey('Page2'),
-        color: Colors.blue,
-      ),
-      Container(
-        key: PageStorageKey('Page3'),
-        color: Colors.pink,
-      ),
-      Container(
-        key: PageStorageKey('Page4'),
-        color: Colors.orange,
+      SettingsScreen(
+        key: PageStorageKey('SettingsScreen'),
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    // return MultiBlocProvider(
-    //   providers: AppProviders.providers,
-    //   child: Scaffold(
-    //     extendBody: true,
-    //     resizeToAvoidBottomInset: false,
-    //     body: PageView(
-    //       controller: _pageController,
-    //       physics: const NeverScrollableScrollPhysics(),
-    //       children: List.generate(_pages.length, (index) => _pages[index]),
-    //     ),
-    //     bottomNavigationBar: Container(
-    //       padding: EdgeInsetsDirectional.symmetric(
-    //         horizontal: 5,
-    //       ),
-    //       decoration: const BoxDecoration(
-    //         color: Colors.white,
-    //       ),
-    //       child: BottomNavigationBar(
-    //         selectedLabelStyle: TextStyle(
-    //           fontSize: 12.sp,
-    //           height: 1.9,
-    //         ),
-    //         fixedColor: Colors.black,
-    //         elevation: 0,
-    //         backgroundColor: Colors.transparent,
-    //         items: [
-    //           buildBottomNavigationBarItem(
-    //             icon: Icons.home,
-    //             color: _currentIndex == 0 ? Colors.black : Colors.grey,
-    //             title: 'Home',
-    //           ),
-    //           buildBottomNavigationBarItem(
-    //             icon: Icons.home,
-    //             color: _currentIndex == 0 ? Colors.black : Colors.grey,
-    //             title: 'Home',
-    //           ),
-    //         ],
-    //         currentIndex: _currentIndex,
-    //         onTap: (index) => _onPageChangedToCurrent(index),
-    //         type: BottomNavigationBarType.fixed,
-    //       ),
-    //     ),
-    //   ),
-    // );
-    return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: false,
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: List.generate(_pages.length, (index) => _pages[index]),
-      ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsetsDirectional.symmetric(
-          horizontal: 5,
+    return MultiBlocProvider(
+      providers: AppProviders.providers,
+      child: Scaffold(
+        extendBody: true,
+        resizeToAvoidBottomInset: false,
+        body: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: List.generate(_pages.length, (index) => _pages[index]),
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(
-            fontSize: 12.sp,
-            height: 1.9,
+        bottomNavigationBar: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          margin: EdgeInsetsDirectional.all(10.sp),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
           ),
-          fixedColor: Colors.black,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          items: [
-            buildBottomNavigationBarItem(
-              icon: Icons.home,
-              color: _currentIndex == 0 ? Colors.black : Colors.grey,
-              title: 'Home',
+          child: BottomNavigationBar(
+            selectedLabelStyle: TextStyle(
+              fontSize: 12.sp,
+              height: 1.9,
             ),
-            buildBottomNavigationBarItem(
-              icon: Icons.settings,
-              color: _currentIndex == 0 ? Colors.black : Colors.grey,
-              title: 'Settings',
-            ),
-          ],
-          currentIndex: _currentIndex,
-          onTap: (index) => _onPageChangedToCurrent(index),
-          type: BottomNavigationBarType.fixed,
+            fixedColor: Colors.black,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            items: [
+              buildBottomNavigationBarItem(
+                icon: Icons.home,
+                color: _currentIndex == 0 ? Colors.black : Colors.grey,
+                title: 'Home',
+              ),
+              buildBottomNavigationBarItem(
+                icon: Icons.settings,
+                color: _currentIndex == 0 ? Colors.black : Colors.grey,
+                title: 'Settings',
+              ),
+            ],
+            currentIndex: _currentIndex,
+            onTap: (index) => _onPageChangedToCurrent(index),
+            type: BottomNavigationBarType.fixed,
+          ),
         ),
       ),
     );

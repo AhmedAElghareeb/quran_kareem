@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quran_kareem/src/presentations/views/start_views/splash/cubit/splash_cubit.dart';
+import 'package:quran_kareem/src/presentations/widgets/app_widgets/image_widget.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -11,7 +13,11 @@ class SplashScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: Center(
-            child: Text('Splash Screen'),
+            child: ImageWidget(
+              assetImage: 'assets/images/quran.png',
+              height: 150.sp,
+              width: 150.sp,
+            ),
           ),
         );
       },
