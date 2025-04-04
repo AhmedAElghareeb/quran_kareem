@@ -7,7 +7,7 @@ import 'package:quran_kareem/src/presentations/views/start_views/splash/splash_s
 
 abstract class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
-    // final args = settings.arguments;
+    final args = settings.arguments;
     switch (settings.name) {
       case AppRoutes.splash:
         return MaterialPageRoute(

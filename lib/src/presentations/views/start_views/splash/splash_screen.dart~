@@ -12,7 +12,6 @@ class SplashScreen extends StatelessWidget {
     return BlocBuilder<SplashCubit, SplashState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
           body: Center(
             child: ImageWidget(
               assetImage: 'assets/images/quran.png',
