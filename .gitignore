@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/release
 # igonered files from uploaded to githubt
 lib/core
+lib/src
