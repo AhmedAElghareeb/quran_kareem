@@ -31,18 +31,20 @@ class SurahService with ApiManager {
             },
           );
 
-  Future<Either<ErrorModel, BaseResponseModel<AyatModel>>> getAyat() async =>
+  Future<Either<ErrorModel, BaseResponseModel<AyaytModel>>> getAyat({
+    required int ayaNumber,
+  }) async =>
       super.handleApiRequest(
         () async {
           final response = await DioHelper.getData(
-            url: ApiEndPoints.ayat,
+            url: "${ApiEndPoints.ayat}/$ayaNumber/ar.alafasy",
           );
           return super.handleResponseError(
             response,
             200,
-            BaseResponseModel<AyatModel>.fromJson(
+            BaseResponseModel<AyaytModel>.fromJson(
               response.data,
-              (json) => AyatModel.fromJson(json),
+              (json) => AyaytModel.fromJson(json),
             ),
           );
         },

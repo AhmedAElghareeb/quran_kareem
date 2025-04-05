@@ -1,11 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quran_kareem/core/helpers/nullable_extensions.dart';
-import 'package:quran_kareem/core/utils/app_spaces.dart';
+import 'package:quran_kareem/core/utils/app_colors.dart';
 import 'package:quran_kareem/src/presentations/views/layout_views/home/cubit/home_cubit.dart';
+import 'package:quran_kareem/src/presentations/views/layout_views/home/widgets/home_loading_widget.dart';
 import 'package:quran_kareem/src/presentations/views/layout_views/home/widgets/item_widget.dart';
-import 'package:quran_kareem/src/presentations/widgets/app_widgets/image_widget.dart';
+import 'package:quran_kareem/src/presentations/widgets/app_widgets/error_widget.dart';
+import 'package:quran_kareem/src/presentations/widgets/app_widgets/home_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,60 +15,37 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        appBar: homeAppBar(),
         body: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             final cubit = HomeCubit.get(context);
             switch (state) {
               case HomeLoadingState():
-                return const Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 3,
-                    color: Colors.lightGreenAccent,
+                return const HomeLoadingWidget();
+              case HomeLoadedState():
+                return RefreshIndicator(
+                  onRefresh: () => Future(() => cubit.refreshData()),
+                  backgroundColor: AppColors.primaryColor,
+                  color: AppColors.whiteColor,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverList.builder(
+                        itemBuilder: (_, index) => ItemWidget(
+                          surah: cubit.surahList[index],
+                        ),
+                        itemCount: cubit.surahList.length,
+                      ),
+                    ],
                   ),
                 );
-              case HomeLoadedState():
-                return CustomScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  slivers: [
-                    SliverAppBar(
-                      expandedHeight: 200.sp,
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: ImageWidget(
-                          assetImage: 'assets/images/quran.png',
-                          height: 150.sp,
-                          width: 100.sp,
-                        ),
-                      ),
-                    ),
-                    SliverList.builder(
-                      itemBuilder: (_, index) => ItemWidget(
-                        surah: cubit.surahList[index],
-                      ),
-                      itemCount: cubit.surahList.length,
-                    ),
-                  ],
-                );
               case HomeErrorState():
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      state.errorModel.message.orEmpty(),
-                    ),
-                    AppSpaces.verticalDefaultSpace1,
-                    ElevatedButton(
-                      onPressed: () => cubit.initData(),
-                      child: Text(
-                        'Try Again',
-                      ),
-                    ),
-                  ],
+                return ErrorStateWidget(
+                  errorMessage: state.errorModel.message,
+                  onPressed: () => cubit.initData(),
                 );
               default:
-                return const Center(
-                  child: Text('Unknown state'),
+                return Center(
+                  child: Text('unknownError'.tr()),
                 );
             }
           },

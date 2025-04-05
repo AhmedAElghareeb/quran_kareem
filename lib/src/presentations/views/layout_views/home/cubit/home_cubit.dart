@@ -20,6 +20,8 @@ class HomeCubit extends Cubit<HomeState> {
     _getSurah();
   }
 
+  void refreshData() async => _getSurah();
+
   Future<void> _getSurah() async {
     emit(HomeLoadingState());
     final result = await _surahService.getSurah();

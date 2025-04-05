@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quran_kareem/core/utils/app_colors.dart';
 import 'package:quran_kareem/core/utils/app_providers.dart';
 import 'package:quran_kareem/src/presentations/views/layout_views/home/home_screen.dart';
 import 'package:quran_kareem/src/presentations/views/layout_views/layout/widgets/bottom_navigation_bar_item.dart';
@@ -19,13 +21,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   int _currentIndex = 0;
 
-  void _onPageChangedToCurrent(int index) {
-    setState(() {
-      _currentIndex = index;
-      _pageController.jumpToPage(index);
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -40,8 +35,16 @@ class _LayoutScreenState extends State<LayoutScreen> {
     ];
   }
 
+  void _onPageChangedToCurrent(int index) {
+    _pageController.jumpToPage(index);
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    context.locale;
     return MultiBlocProvider(
       providers: AppProviders.providers,
       child: Scaffold(
@@ -54,7 +57,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.primaryColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
@@ -62,24 +65,27 @@ class _LayoutScreenState extends State<LayoutScreen> {
           ),
           child: BottomNavigationBar(
             selectedLabelStyle: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
               height: 1.9,
             ),
-            fixedColor: Colors.lightGreenAccent,
+            fixedColor: AppColors.whiteColor,
             elevation: 0,
             backgroundColor: Colors.transparent,
             items: [
               buildBottomNavigationBarItem(
                 icon: Icons.home,
-                color:
-                    _currentIndex == 0 ? Colors.lightGreenAccent : Colors.grey,
-                title: 'Home',
+                color: _currentIndex == 0
+                    ? AppColors.whiteColor
+                    : AppColors.scaffoldColor,
+                title: 'home'.tr(),
               ),
               buildBottomNavigationBarItem(
                 icon: Icons.settings,
-                color:
-                    _currentIndex == 1 ? Colors.lightGreenAccent : Colors.grey,
-                title: 'Settings',
+                color: _currentIndex == 1
+                    ? AppColors.whiteColor
+                    : AppColors.scaffoldColor,
+                title: 'settings'.tr(),
               ),
             ],
             currentIndex: _currentIndex,

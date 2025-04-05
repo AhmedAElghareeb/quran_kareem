@@ -1,11 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quran_kareem/core/helpers/navigation_helper.dart';
-import 'package:quran_kareem/core/utils/app_router.dart';
-import 'package:quran_kareem/core/utils/app_routes.dart';
+import 'package:quran_kareem/core/utils/app_settings.dart';
 import 'package:quran_kareem/core/utils/observer.dart';
+import 'package:quran_kareem/src/quran_app.dart';
 import 'package:quran_kareem/src/service_locator.dart';
 
 void main() async {
@@ -14,35 +14,14 @@ void main() async {
   await setupDi();
   Bloc.observer = MyAppObserver();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const QuranKareem());
-}
-
-class QuranKareem extends StatelessWidget {
-  const QuranKareem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (_, child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Quran Kareem',
-        builder: (context, widget) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: const TextScaler.linear(1.0),
-            ),
-            child: widget!,
-          );
-        },
-        navigatorKey: NavigationHelper.navigatorKey,
-        initialRoute: AppRoutes.splash,
-        onGenerateRoute: AppRouter.onGenerateRoute,
-        onGenerateInitialRoutes: (initialRoute) =>
-            AppRouter.onGenerateInitialRoutes(initialRoute),
-      ),
-    );
-  }
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('ar'),
+      startLocale: Locale(AppSettings.language ?? 'ar'),
+      saveLocale: true,
+      child: const QuranKareem(),
+    ),
+  );
 }

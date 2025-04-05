@@ -25,7 +25,6 @@ class ItemWidget extends StatelessWidget {
             route: AppRoutes.readingScreen,
             arguments: {
               'ayaNumber': surah.number.orZero(),
-              'ayaName' : surah.name.orEmpty(),
             });
         debugPrint("Tap onSurah => ${surah.number}");
       },

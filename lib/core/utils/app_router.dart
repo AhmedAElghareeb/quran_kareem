@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quran_kareem/core/utils/app_routes.dart';
 import 'package:quran_kareem/src/presentations/views/layout_views/layout/layout_screen.dart';
+import 'package:quran_kareem/src/presentations/views/layout_views/reading/cubit/reading_cubit.dart';
+import 'package:quran_kareem/src/presentations/views/layout_views/reading/reading_screen.dart';
 import 'package:quran_kareem/src/presentations/views/start_views/splash/cubit/splash_cubit.dart';
 import 'package:quran_kareem/src/presentations/views/start_views/splash/splash_screen.dart';
 
@@ -20,6 +22,20 @@ abstract class AppRouter {
       case AppRoutes.layout:
         return MaterialPageRoute(
           builder: (_) => const LayoutScreen(),
+          settings: settings,
+        );
+      case AppRoutes.readingScreen:
+        final data = args as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => ReadingCubit()
+              ..initData(
+                ayaNumber: data['ayaNumber'],
+              ),
+            child: ReadingScreen(
+              ayaName: data['ayaName'],
+            ),
+          ),
           settings: settings,
         );
       default:

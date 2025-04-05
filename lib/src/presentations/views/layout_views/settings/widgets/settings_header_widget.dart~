@@ -10,8 +10,8 @@ class SettingsHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ImageWidget(
       assetImage: AppAssets.logo,
-      height: 150.sp,
-      width: 150.sp,
+      height: 180.sp,
+      width: 180.sp,
     );
   }
 }

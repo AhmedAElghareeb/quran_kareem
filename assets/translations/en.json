@@ -1,0 +1,19 @@
+{
+  "language": "English",
+  "quranKareem": "Quran Kareem",
+  "tryAgain": "Try Again",
+  "unknownError": "Unknown Error",
+  "home": "Home",
+  "settings": "Settings",
+  "surahEn": "Surah Name in English",
+  "surahAr": "Surah Name in Arabic",
+  "surahNo": "Surah Number",
+  "surahAyat": "Number of Ayat",
+  "loadingMore_ae": "Loading more",
+  "noData_ae": "No data available",
+  "failed_ae": "An error occurred during loading",
+  "canLoading_ae": "Keep loading",
+  "privacy": "Privacy Policy",
+  "terms": "Terms and Conditions",
+  "about": "About the App"
+}

@@ -5,13 +5,11 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:quran_kareem/core/constants/api_endPoints.dart';
 import 'package:quran_kareem/core/utils/app_interceptor.dart';
 import 'package:quran_kareem/src/data/services/surah_sevice.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:quran_kareem/src/data/services/surah_sevice.dart';
 
 final GetIt locator = GetIt.I;
 
 Future<void> setupDi() async {
-  final SharedPreferences preferences = await SharedPreferences.getInstance();
-  locator.registerLazySingleton<SharedPreferences>(() => preferences);
   if (kDebugMode) {
     locator.registerLazySingleton<PrettyDioLogger>(() => PrettyDioLogger());
     locator.registerLazySingleton<Dio>(

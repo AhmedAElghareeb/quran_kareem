@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quran_kareem/core/utils/app_colors.dart';
 import 'package:quran_kareem/core/utils/app_spaces.dart';
 import 'package:quran_kareem/core/utils/app_styles.dart';
 
@@ -23,7 +24,9 @@ class ItemTileWidget extends StatelessWidget {
           child: Text(
             title,
             maxLines: 3,
-            style: AppStyles.titleStyle,
+            style: AppStyles.titleStyle.copyWith(
+              color: AppColors.whiteColor,
+            ),
           ),
         ),
         AppSpaces.horizontalDefaultSpace1,
@@ -31,7 +34,9 @@ class ItemTileWidget extends StatelessWidget {
           child: Text(
             subTitle,
             maxLines: 3,
-            style: AppStyles.subTitleStyle,
+            style: AppStyles.subTitleStyle.copyWith(
+              color: AppColors.whiteColor,
+            ),
           ),
         ),
       ],
